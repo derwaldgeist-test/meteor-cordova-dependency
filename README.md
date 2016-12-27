@@ -24,12 +24,11 @@ Cordova error: Cannot find plugin.xml for plugin 'cordova-plugin-compat'. Please
 
 This one is hard to track down, because it is not obvious what is happening here. It took a whole working day to find out where this ominous `cordova-plugin-compat` plugin is actually coming from. Here's the explanation:
 
-- `percolate:safe-reload` defines a dependency on `cordova-plugin-file`. But the plugin author forgot to state an explicit version for the dependency.
-- If `percolate:safe-reload` happens to be loaded before any other reference to `cordova-plugin-file` can be found, it downloads version 4.3.1 of `cordova-plugin-file`. This version has a dependency on 'cordova-plugin-compat'. So this plugin is downloaded as well.
-- As part of the ongoing build process, Meteor (or Cordova) has a hard-coded dependency on `cordova-plugin-file-transfer`. This plugin defines an explicit dependency on `cordova-plugin-file` for version >=2.0.0\. This causes Meteor to download the `cordova-plugin-file` plugin once again and overwrites its 4.3.1 version with a 2.1.0 version (this version can be found on disk after the build process).
+- `percolate:safe-reload` defines a dependency on `cordova-plugin-file`. This downloads version 4.3.1 of `cordova-plugin-file`. This version has a dependency on 'cordova-plugin-compat'.
+- As part of the ongoing build process, Meteor seems to pin down the version of this plugin down to 2.1.0\. This version will be downloaded later and overwrites the 4.3.1 version (and can actually be found on disk after the build process).
 - Version 2.1.0 does not contain a dependency on `cordova-plugin-compat`. But the files `android.json` and `ios.json` still list it as a dependency, causing the build to break.
 
-At first sight, one could think this only happens if a plugin author forgets to state an explicit version. The following sample shows that this is not the case.
+At first sight, I thought this happens because the author of `percolate:safe-reload` forgot to state an explicit version for `cordova-plugin-file`. But this does not matter. Even in a fork that sets the version to >= 2.1.0 the problem occurs.
 
 ## PayPal SDK sample
 
