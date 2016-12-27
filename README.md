@@ -35,7 +35,7 @@ This sample can be enabled using the `.meteor/packages` file.
 
 In this clean-room app, this test case breaks the build only once in a while, at random times, depending on how quick the Cordova plugin folder is purged on startup. In my production app with a lot more Cordova plugin, however, this breaks every build.
 
-Here, a local package is included that references the PayPal Mobile SDK. This SDK itself defines a dependency on `card.io.cordova.mobilesdk`.
+This test case involves a local package that references the PayPal Mobile SDK. This SDK defines a dependency on `card.io.cordova.mobilesdk`, for a certain version.
 
 On the first run, both Cordova plugins are being downloaded, and everything is working as expected. On the second run, however, Meteor purges all Cordova plugins for an unknown reason and tries to re-download them. _Sometimes_ it happens that the dependency plugin `card.io.cordova.mobilesdk` remains on disk, which causes the build to fail due to an existing file:
 
