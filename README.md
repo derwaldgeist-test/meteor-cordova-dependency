@@ -52,3 +52,14 @@ On the first run, both Cordova plugins are being downloaded, and everything is w
 As being said, this does not happen all the time. But when it happens, the developer has to kill -9 the Meteor process and do a `meteor reset` to be able to restart the app.
 
 It is also interesting that in this sample, the cordova-plugins folder is purged on every startup, even if the plugins haven't changed. I haven't found out so far why this is actually happening.
+
+# Workaround
+
+There is an ugly workaround to prevent these kind of errors. If you add the dependency plugins manually to `.meteor\cordova-plugins`, the build will run as expected. In our case, the following would do the trick:
+
+```
+card.io.cordova.mobilesdk@2.1.0
+cordova-plugin-compat@1.0.0
+```
+
+The first plugin is the dependency of the PayPal SDK, the second one the dependency of `percolate:safe-reload`.
