@@ -25,7 +25,7 @@ Cordova error: Cannot find plugin.xml for plugin 'cordova-plugin-compat'. Please
 This one is hard to track down, because it is not obvious what is happening here. It took a whole working day to find out where this ominous `cordova-plugin-compat` plugin is actually coming from. Here's the explanation:
 
 - `percolate:safe-reload` defines a dependency on `cordova-plugin-file`. This downloads version 4.3.1 of `cordova-plugin-file`. This version has a dependency on 'cordova-plugin-compat'.
-- As part of the ongoing build process, Meteor seems to pin down the version of this plugin down to 2.1.0\. This version will be downloaded later and overwrites the 4.3.1 version (and can actually be found on disk after the build process).
+- As part of the ongoing build process, Meteor seems to pin down the version of this plugin to 2.1.0\. This version will be downloaded later and overwrites the 4.3.1 version (and can actually be found on disk after the build process).
 - Version 2.1.0 does not contain a dependency on `cordova-plugin-compat`. But the files `android.json` and `ios.json` still list it as a dependency, causing the build to break.
 
 At first sight, I thought this happens because the author of `percolate:safe-reload` forgot to state an explicit version for `cordova-plugin-file`. But this does not matter. Even in a fork that sets the version to >= 2.1.0 the problem occurs.
