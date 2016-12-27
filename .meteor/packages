@@ -19,8 +19,8 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 autopublish             # Publish all data to the clients (for prototyping)
 insecure                # Allow all DB writes from clients (for prototyping)
 
-# Community package referencing Cordova plugin with 2-step dependency chain
-# percolate:safe-reload
+# Test case 1: Community package referencing Cordova plugin with 2-step dependency chain
+percolate:safe-reload
 
-# Local package referencing Cordova plugin with direct dependency
-test:paypal
+# Test case 2: Local package referencing Cordova plugin with direct dependency
+#test:paypal
