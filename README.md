@@ -35,7 +35,7 @@ At first sight, one could think this only happens if a plugin author forgets to 
 
 This sample can be enabled using the `.meteor/packages` file.
 
-In this clean-room app, this test case breaks the build only once in a while, at random times, depending on how quick the Cordova plugin folder is purged on startup. In my production app with a lot more Cordova plugin, however, this breaks every build.
+In this clean-room app, this test case breaks the build only once in a while, at random times, depending on how quick the Cordova plugin folder is purged on startup. In my production app with a lot more Cordova plugin, however, this breaks every build. I assume this happens because the purge is done in a parallel thread and Meteor does not wait until the files are actually deleted before it tries to install the plugins again.
 
 This test case involves a local package that references the PayPal Mobile SDK. This SDK defines a dependency on `card.io.cordova.mobilesdk`, for a certain version.
 
